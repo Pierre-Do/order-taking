@@ -6,8 +6,7 @@ module.exports = {
   moduleFileExtensions: ['js', 'jsx', 'json'],
   notify: true,
   moduleNameMapper: {
-    '.*scss$': '<rootDir>/specs/mocks/stub.scss',
-    '.*md$': '<rootDir>/specs/mocks/raw.js',
+    '.*scss$': '<rootDir>/mocks/stub.scss',
   },
   transform: {
     '.*': '<rootDir>/node_modules/babel-jest',
