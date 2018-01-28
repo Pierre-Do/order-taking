@@ -1,58 +1,53 @@
-import React from 'react';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from 'reactstrap';
+import React, { Component } from 'react';
 
-class NavBar extends React.Component {
+import { Input, Menu, Container } from 'semantic-ui-react';
+
+class NavBar extends Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false,
-    };
+    this.handleItemClick = this.handleItemClick.bind(this);
+
+    this.state = { activeItem: 'home' };
   }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen,
-    });
+
+  handleItemClick(e, { name }) {
+    this.setState({ activeItem: name });
   }
+
   render() {
+    const { activeItem } = this.state;
+
     return (
-      <div>
-        <Navbar color="faded" light expand="md">
-          <NavbarBrand href="/">Test Order Taking</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/components/">Help</NavLink>
-              </NavItem>
-              <UncontrolledDropdown nav>
-                <DropdownToggle nav caret>
-                  My Account
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem>Settings</DropdownItem>
-                  <DropdownItem>History</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>Logout</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </div>
+      <Menu fixed="top" inverted>
+        <Container>
+          <Menu.Item
+            name="home"
+            active={activeItem === 'home'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            name="messages"
+            active={activeItem === 'messages'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Item
+            name="friends"
+            active={activeItem === 'friends'}
+            onClick={this.handleItemClick}
+          />
+          <Menu.Menu position="right">
+            <Menu.Item>
+              <Input icon="search" placeholder="Search..." />
+            </Menu.Item>
+            <Menu.Item
+              name="logout"
+              active={activeItem === 'logout'}
+              onClick={this.handleItemClick}
+            />
+          </Menu.Menu>
+        </Container>
+      </Menu>
     );
   }
 }

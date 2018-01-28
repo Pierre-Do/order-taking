@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, Label, Input, Col, FormFeedback } from 'reactstrap';
+import { Form, Message } from 'semantic-ui-react';
 
 import provideFormData from '../../libs/hoc/provideFormData';
 
@@ -23,28 +23,24 @@ const FormField = ({ field, handleChange, formName, formField }) => {
   } = field;
   const id = `${formName}-${formField}`;
 
-  const validProps = errorMessage ? { valid: false } : {};
+  const validProps = errorMessage ? { error: false } : {};
 
   return (
-    <FormGroup row>
-      <Label htmlFor={id} sm={2}>
-        {label}
-      </Label>
-      <Col sm={10}>
-        <Input
-          id={id}
-          value={value}
-          required={required}
-          aria-required={!!required}
-          aria-invalid={!!errorMessage}
-          onChange={handleChange}
-          type={fieldType}
-          placeholder={placeholder}
-          {...validProps}
-        />
-        {errorMessage ? <FormFeedback>{errorMessage}</FormFeedback> : null}
-      </Col>
-    </FormGroup>
+    <Form.Group>
+      <Form.Input
+        id={id}
+        value={value}
+        required={required}
+        aria-required={!!required}
+        aria-invalid={!!errorMessage}
+        onChange={handleChange}
+        type={fieldType}
+        placeholder={placeholder}
+        label={label}
+        {...validProps}
+      />
+      {errorMessage ? <Message error content={errorMessage} /> : null}
+    </Form.Group>
   );
 };
 
