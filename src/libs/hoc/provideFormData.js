@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { validate } from '../../actions/form';
 
-const provideFormData = ({ formName }) => Component => {
+const provideFormData = formName => Component => {
   const mapDispatchToProps = dispatch => ({
     handleSubmit: e => {
       e.preventDefault();
