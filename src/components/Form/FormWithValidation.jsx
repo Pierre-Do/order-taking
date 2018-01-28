@@ -19,7 +19,7 @@ const HeaderAndMessage = ({ hasError, title, children, handleSubmit }) => {
 };
 
 HeaderAndMessage.propTypes = {
-  hasError: PropTypes.string,
+  hasError: PropTypes.bool,
   title: PropTypes.string,
   children: PropTypes.any,
   handleSubmit: PropTypes.func,
