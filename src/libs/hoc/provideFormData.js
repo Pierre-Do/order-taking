@@ -1,20 +1,20 @@
 import { connect } from 'react-redux';
-import { updateValue } from '../../actions/form';
+import { validate } from '../../actions/form';
 
-const provideFormData = ({ formName, formField }) => Component => {
+const provideFormData = ({ formName }) => Component => {
   const mapDispatchToProps = dispatch => ({
-    handleChange: e =>
-      dispatch(
-        updateValue({
-          formName,
-          formField,
-          value: e.target.value,
-        })
-      ),
+    handleSubmit: e => {
+      e.preventDefault();
+      dispatch(validate({ formName }));
+    },
   });
 
-  const mapStateToProps = ({ forms }) => ({
-    field: forms[formName] && forms[formName][formField],
+  const mapStateToProps = state => ({
+    hasError:
+      state.forms[formName] &&
+      Object.keys(state.forms[formName]).some(
+        key => state.forms[formName][key].errorMessage
+      ),
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(Component);

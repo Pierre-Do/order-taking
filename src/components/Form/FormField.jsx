@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Message } from 'semantic-ui-react';
 
-import provideFormData from '../../libs/hoc/provideFormData';
+import provideFormData from '../../libs/hoc/provideFormFieldData';
 
 const FormFieldContainer = props => {
   return React.createElement(provideFormData(props)(FormField), props);
@@ -23,7 +23,7 @@ const FormField = ({ field, handleChange, formName, formField }) => {
   } = field;
   const id = `${formName}-${formField}`;
 
-  const validProps = errorMessage ? { error: false } : {};
+  const validProps = errorMessage ? { error: true } : {};
 
   return (
     <Form.Group>

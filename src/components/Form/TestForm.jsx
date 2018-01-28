@@ -1,46 +1,32 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Form, Button, Message } from 'semantic-ui-react';
-
-import { validate } from '../../actions/form';
+import { Form, Button, Message, Segment } from 'semantic-ui-react';
 
 import FormField from './FormField';
-import ThirdList from '../ThirdList/ThirdList';
+import provideFormData from '../../libs/hoc/provideFormData';
 
-const mapDispatchToProps = (dispatch, { name }) => ({
-  handleSubmit: e => {
-    e.preventDefault();
-    dispatch(validate({ formName: name }));
-  },
-});
-
-const mapStateToProps = (state, { name }) => ({
-  hasError: Object.keys(state.forms[name]).some(
-    key => state.forms[name][key].errorMessage
-  ),
-});
-
-const TestForm = ({ handleSubmit, name, hasError }) => (
-  <React.Fragment>
+const TestForm = ({ handleSubmit, formName, hasError }) => (
+  <Segment>
     <h3>Third Selection</h3>
     {hasError ? (
       <Message header="Please fix the error below" content="Errors" error />
     ) : null}
     <Form noValidate onSubmit={handleSubmit} error={hasError}>
-      <FormField formName={name} formField="third" />
-      <FormField formName={name} formField="name" />
-      <Button content="Search" icon="right search" labelPosition="right">
-      </Button>
+      <FormField formName={formName} formField="third" />
+      <FormField formName={formName} formField="name" />
+      <Button content="Search" icon="search" labelPosition="right" />
     </Form>
-    <ThirdList />
-  </React.Fragment>
+  </Segment>
 );
 
 TestForm.propTypes = {
-  name: PropTypes.string,
+  formName: PropTypes.string,
   handleSubmit: PropTypes.func,
   hasError: PropTypes.bool,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TestForm);
+const TestFormContainer = props => {
+  return React.createElement(provideFormData(props)(TestForm), props);
+};
+
+export default TestFormContainer;

@@ -2,7 +2,7 @@ import { CREATE, UPDATE_VALUE, VALIDATE } from '../actions/formConstants';
 
 const isValid = field => !field.required || field.value.length > 0;
 
-const validate = data => ({ formName }) => {
+const getValidatedFormData = data => ({ formName }) => {
   return Object.keys(data[formName]).reduce((obj, name) => {
     const formField = data[formName][name];
     obj[name] = Object.assign({}, formField, {
@@ -39,7 +39,7 @@ const forms = (data = {}, action = {}) => {
       });
     case VALIDATE:
       return Object.assign({}, data, {
-        [formName]: validate(data)(formFieldData),
+        [formName]: getValidatedFormData(data)(formFieldData),
       });
     default:
       return data;
