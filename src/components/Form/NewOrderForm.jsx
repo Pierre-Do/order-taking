@@ -5,7 +5,7 @@ import { Form, Button, Message, Segment } from 'semantic-ui-react';
 import FormField from './FormField';
 import provideFormData from '../../libs/hoc/provideFormData';
 
-const TestForm = ({ handleSubmit, formName, hasError }) => (
+const NewOrderForm = ({ handleSubmit, formName, hasError }) => (
   <Segment>
     <h3>Third Selection</h3>
     {hasError ? (
@@ -19,14 +19,14 @@ const TestForm = ({ handleSubmit, formName, hasError }) => (
   </Segment>
 );
 
-TestForm.propTypes = {
+NewOrderForm.propTypes = {
   formName: PropTypes.string,
   handleSubmit: PropTypes.func,
   hasError: PropTypes.bool,
 };
 
 const TestFormContainer = props => {
-  return React.createElement(provideFormData(props)(TestForm), props);
+  return React.createElement(provideFormData(props)(NewOrderForm), props);
 };
 
 export default TestFormContainer;

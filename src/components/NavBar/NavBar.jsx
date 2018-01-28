@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { Input, Menu, Container } from 'semantic-ui-react';
+import { Input, Menu, Container, Dropdown } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class NavBar extends Component {
   constructor(props) {
@@ -21,21 +22,16 @@ class NavBar extends Component {
     return (
       <Menu fixed="top" inverted>
         <Container>
-          <Menu.Item
-            name="home"
-            active={activeItem === 'home'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name="messages"
-            active={activeItem === 'messages'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name="friends"
-            active={activeItem === 'friends'}
-            onClick={this.handleItemClick}
-          />
+          <Dropdown item text="Menu">
+            <Dropdown.Menu>
+              <Dropdown.Item as={Link} to="/">
+                New Order
+              </Dropdown.Item>
+              <Dropdown.Item as={Link} to="/new-third">
+                New Third
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
           <Menu.Menu position="right">
             <Menu.Item>
               <Input icon="search" placeholder="Search..." />

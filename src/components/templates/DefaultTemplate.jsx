@@ -14,6 +14,7 @@ const DefaultTemplate = props => {
         <NavBar />
       </header>
       <main>
+        <div style={{marginTop: '60px'}} />
         <Container className="container">{props.children}</Container>
       </main>
       <footer>

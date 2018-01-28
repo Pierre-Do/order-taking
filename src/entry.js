@@ -28,4 +28,24 @@ store.dispatch(
   })
 );
 
+store.dispatch(
+  create({
+    formName: 'newThird',
+    formField: 'firstName',
+    label: 'First Name',
+    fieldType: 'text',
+    required: true,
+  })
+);
+
+store.dispatch(
+  create({
+    formName: 'newThird',
+    formField: 'lastName',
+    label: 'Last Name',
+    fieldType: 'text',
+    required: true,
+  })
+);
+
 render(React.createElement(AppWithStore), document.getElementById('root'));
