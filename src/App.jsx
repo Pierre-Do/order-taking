@@ -12,12 +12,12 @@ const App = () => {
         <Route
           exact
           path="/"
-          component={() => <PageAsync pageName="orderCreation" />}
+          component={() => <PageAsync page="OrderCreation" />}
         />
         <Route
           exact
           path="/new-third"
-          component={() => <PageAsync pageName="thirdCreation" />}
+          component={() => <PageAsync page="ThirdCreation" />}
         />
       </DefaultTemplate>
     </Router>

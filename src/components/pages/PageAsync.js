@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 const importPage = pageName => {
   switch (pageName) {
-    case 'orderCreation':
-      return import(/* webpackChunkName: orderCreation */ './OrderCreation');
-    case 'thirdCreation':
-      return import(/* webpackChunkName: thirdCreation */ './ThirdCreation');
+    case 'OrderCreation':
+      return import(/* webpackChunkName: 'OrderCreation' */ './OrderCreation');
+    case 'ThirdCreation':
+      return import(/* webpackChunkName: 'ThirdCreation' */ './ThirdCreation');
     default:
       throw new Error(`${pageName} not found`);
   }
@@ -23,7 +23,7 @@ class PageAsync extends React.Component {
 
   componentDidMount() {
     // Supports isomorphic and test builds.
-    importPage(this.props.pageName)
+    importPage(this.props.page)
       .then(page => page.default)
       .then(module => {
         this.setState({
@@ -43,7 +43,7 @@ class PageAsync extends React.Component {
 }
 
 PageAsync.propTypes = {
-  pageName: PropTypes.string,
+  page: PropTypes.string,
 };
 
 export default PageAsync;
