@@ -2,6 +2,8 @@ import webpack from 'webpack';
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const vendor = ['react', 'react-dom', 'react-redux', 'react-router-dom'];
 const isProduction = process.env.NODE_ENV === 'production';
@@ -10,7 +12,7 @@ export default {
   name: 'client',
   target: 'web',
 
-  devtool: isProduction ? null : 'cheap-module-eval-source-map',
+  devtool: isProduction ? false : 'cheap-module-eval-source-map',
 
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.scss'],
@@ -66,6 +68,14 @@ export default {
           use: ['css-loader', 'postcss-loader', 'sass-loader'],
         }),
       },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader?name=public/fonts/[name].[ext]',
+      },
+      {
+        test: /\.(png)$/,
+        loader: 'file-loader?name=public/images/[name].[ext]',
+      },
     ],
   },
 
@@ -89,25 +99,10 @@ export default {
       minimize: true,
       debug: false,
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        dead_code: true,
-        warnings: false,
-        unused: true,
-        drop_console: true,
-        conditionals: true,
-        evaluate: true,
-        sequences: true,
-        booleans: true,
-        loops: true,
-      },
-      beautify: false,
-      mangle: true,
-      output: {
-        comments: false,
-      },
-      ie8: false,
-      comments: /@license|@preserv/gi,
+    new UglifyJsPlugin({
+      cache: true,
+      parallel: true,
+      sourceMap: !isProduction,
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
@@ -133,6 +128,10 @@ export default {
         preserveLineBreaks: true,
       },
       template: 'index.html',
+    }),
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      analyzerMode: 'static',
     }),
   ],
 };

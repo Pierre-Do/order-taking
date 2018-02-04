@@ -1,6 +1,4 @@
-div[tabindex="-1"],
-h2[tabindex="-1"] {
-  &:focus {
-    outline: 0;
-  }
-}
+@import './scss/common';
+
+// Semantic dependencies
+@import '../node_modules/semantic-ui-css/semantic.min.css';

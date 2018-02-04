@@ -37,6 +37,14 @@ export default {
         loaders: ['style-loader', 'css-loader', 'fontgen-loader?embed'],
       },
       {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file-loader?name=public/fonts/[name].[ext]',
+      },
+      {
+        test: /\.(png)$/,
+        loader: 'file-loader?name=public/images/[name].[ext]',
+      },
+      {
         test: /\.s?css$/,
         use: [
           {
@@ -102,6 +110,30 @@ export default {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new CopyWebpackPlugin([{ from: path.join(__dirname, 'src/assets') }]),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(
+          __dirname,
+          'node_modules/semantic-ui-css/themes/default/assets/fonts'
+        ),
+      },
+    ]),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(
+          __dirname,
+          'node_modules/semantic-ui-css/themes/default/assets/fonts'
+        ),
+      },
+    ]),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(
+          __dirname,
+          'node_modules/semantic-ui-css/themes/default/assets/images'
+        ),
+      },
+    ]),
     new webpack.LoaderOptionsPlugin({
       debug: false,
     }),
