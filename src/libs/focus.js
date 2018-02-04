@@ -2,6 +2,12 @@ export const setFocusOnFirstError = () => {
   const errorFields = document.querySelectorAll('*[aria-invalid="true"]');
   if (errorFields.length) {
     errorFields[0].focus();
-    console.log(errorFields[0])
+  }
+};
+
+export const setFocusOnTitle = () => {
+  const titles = document.querySelectorAll('h2');
+  if (titles.length) {
+    titles[0].focus();
   }
 };

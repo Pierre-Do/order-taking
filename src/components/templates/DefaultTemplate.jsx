@@ -6,6 +6,7 @@ import Footer from '../Footer/Footer';
 import { Container } from 'semantic-ui-react';
 
 import './DefaultTemplate.scss';
+import provideKeyboardShortcut from "../../libs/hoc/provideKeyboardShortcut";
 
 const DefaultTemplate = props => {
   return (
@@ -28,4 +29,4 @@ DefaultTemplate.propTypes = {
   children: PropTypes.any,
 };
 
-export default DefaultTemplate;
+export default provideKeyboardShortcut(DefaultTemplate);

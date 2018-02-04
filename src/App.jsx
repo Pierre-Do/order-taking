@@ -1,9 +1,11 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import DefaultTemplate from './components/templates/DefaultTemplate';
-
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 import PageAsync from './components/PageAsync/PageAsync';
+import { NEW_ORDER, NEW_THIRD } from './routes';
+
+import './App.scss';
 
 const App = () => {
   return (
@@ -11,12 +13,12 @@ const App = () => {
       <DefaultTemplate>
         <Route
           exact
-          path="/"
+          path={NEW_ORDER}
           component={() => <PageAsync page="OrderCreation" />}
         />
         <Route
           exact
-          path="/new-third"
+          path={NEW_THIRD}
           component={() => <PageAsync page="ThirdCreation" />}
         />
       </DefaultTemplate>
