@@ -14,7 +14,12 @@
     "react"
   ],
   "plugins": [
-    "lodash",
+    [
+      "lodash",
+      {
+        "id": ["lodash", "semantic-ui-react"]
+      }
+    ],
     "syntax-dynamic-import",
     [
       "transform-react-remove-prop-types",
