@@ -10,5 +10,5 @@ export default {
       label: 'Name',
       fieldType: 'text',
     },
-  }
+  },
 };

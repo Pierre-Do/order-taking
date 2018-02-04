@@ -10,5 +10,5 @@ export default {
       fieldType: 'text',
       required: true,
     },
-  }
+  },
 };
