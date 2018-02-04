@@ -4,12 +4,13 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const vendor = ['react', 'react-dom', 'react-redux', 'react-router-dom'];
+const isProduction = process.env.NODE_ENV === 'production';
 
 export default {
   name: 'client',
   target: 'web',
 
-  devtool: 'cheap-module-eval-source-map',
+  devtool: isProduction ? null : 'cheap-module-eval-source-map',
 
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.scss'],

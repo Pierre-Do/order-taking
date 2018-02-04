@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 
 import FormField from '../Form/FormField';
-import FormWithValidation from '../Form/FormWithValidation';
+import FormWithValidation from '../Form/FormWithValidationContainer';
 
 const FORM_NAME = 'newThird';
 
