@@ -1,4 +1,4 @@
-import { UPDATE_VALUE, VALIDATE, CREATE } from './formConstants';
+import { UPDATE_VALUE, VALIDATE, LOAD_DATA } from './formConstants';
 
 export const updateValue = formFieldData => ({
   type: UPDATE_VALUE,
@@ -10,7 +10,7 @@ export const validate = formFieldData => ({
   formFieldData,
 });
 
-export const create = formFieldData => ({
-  type: CREATE,
+export const loadData = formFieldData => ({
+  type: LOAD_DATA,
   formFieldData,
 });

@@ -1,10 +1,14 @@
-import { CREATE, UPDATE_VALUE, VALIDATE } from '../actions/formConstants';
+import { LOAD_DATA, UPDATE_VALUE, VALIDATE } from '../actions/formConstants';
 
-const isValid = field => !field.required || field.value.length > 0;
+const isValid = field =>
+  !field.required ||
+  (typeof field.value !== 'undefined' && field.value.length > 0);
 
 const getValidatedFormData = data => ({ formName }) => {
-  return Object.keys(data[formName]).reduce((obj, name) => {
-    const formField = data[formName][name];
+  const formDataToValidate = data[formName];
+
+  return Object.keys(formDataToValidate).reduce((obj, name) => {
+    const formField = formDataToValidate[name];
     obj[name] = Object.assign({}, formField, {
       errorMessage: !isValid(formField) ? 'Required' : null,
     });
@@ -18,28 +22,33 @@ const forms = (data = {}, action = {}) => {
     return data;
   }
 
-  const { formName, formField, value } = formFieldData;
+  const formName = Object.keys(formFieldData)[0];
+  const formFields = formFieldData[formName];
 
   switch (type) {
-    case CREATE:
+    case LOAD_DATA:
       return Object.assign({}, data, {
-        [formName]: Object.assign({}, data[formName], {
-          [formField]: Object.assign({}, formFieldData, {
-            value: '',
-          }),
-        }),
+        [formName]: Object.assign({}, data[formName], formFields),
       });
     case UPDATE_VALUE:
       return Object.assign({}, data, {
-        [formName]: Object.assign({}, data[formName], {
-          [formField]: Object.assign({}, data[formName][formField], {
-            value,
-          }),
-        }),
+        [formFieldData.formName]: Object.assign(
+          {},
+          data[formFieldData.formName],
+          {
+            [formFieldData.formField]: Object.assign(
+              {},
+              data[formFieldData.formName][formFieldData.formField],
+              {
+                value: formFieldData.value,
+              }
+            ),
+          }
+        ),
       });
     case VALIDATE:
       return Object.assign({}, data, {
-        [formName]: getValidatedFormData(data)(formFieldData),
+        [formFieldData.formName]: getValidatedFormData(data)(formFieldData),
       });
     default:
       return data;

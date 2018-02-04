@@ -23,13 +23,16 @@ const FormField = ({ field, handleChange, formName, formField }) => {
   } = field;
   const id = `${formName}-${formField}`;
 
+  // We only want controlled React field.
+  const controlledInputValue = typeof value !== 'undefined' ? value : '';
+
   const validProps = errorMessage ? { error: true } : {};
 
   return (
     <Form.Group>
       <Form.Input
         id={id}
-        value={value}
+        value={controlledInputValue}
         required={required}
         aria-required={!!required}
         aria-invalid={!!errorMessage}
