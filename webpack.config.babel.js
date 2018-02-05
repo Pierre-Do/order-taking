@@ -100,9 +100,20 @@ export default {
       debug: false,
     }),
     new UglifyJsPlugin({
-      cache: true,
       parallel: true,
       sourceMap: !isProduction,
+      cache: true,
+      uglifyOptions: {
+        ie8: false,
+        ecma: 6,
+        mangle: true,
+        output: {
+          comments: false,
+          beautify: false,
+        },
+        compress: true,
+        warnings: false,
+      },
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
