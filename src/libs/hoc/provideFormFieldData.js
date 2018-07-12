@@ -17,7 +17,10 @@ const provideFormFieldData = ({ formName, formField }) => Component => {
     field: forms[formName] && forms[formName][formField],
   });
 
-  return connect(mapStateToProps, mapDispatchToProps)(Component);
+  return connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Component);
 };
 
 export default provideFormFieldData;

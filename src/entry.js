@@ -14,7 +14,7 @@ import provideTranslations from './libs/hoc/provideTranslations';
 const applyHOC = compose(
   provideStore(store),
   provideIntl,
-  provideTranslations({}),
+  provideTranslations({})
 );
 
 const AppWithProviders = applyHOC(App);

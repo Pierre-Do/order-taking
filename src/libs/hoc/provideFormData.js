@@ -17,7 +17,10 @@ const provideFormData = formName => Component => {
       ),
   });
 
-  return connect(mapStateToProps, mapDispatchToProps)(Component);
+  return connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Component);
 };
 
 export default provideFormData;

@@ -109,7 +109,6 @@ export default {
       template: 'index.html',
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new CopyWebpackPlugin([{ from: path.join(__dirname, 'src/assets') }]),
     new CopyWebpackPlugin([
       {
         from: path.join(

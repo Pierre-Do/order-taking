@@ -15,7 +15,7 @@ class OrderCreation extends React.PureComponent {
     setFocusOnTitle();
   }
 
-  componentDidMount(){
+  componentDidMount() {
     setFocusOnTitle();
   }
 

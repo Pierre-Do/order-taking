@@ -1,18 +1,15 @@
 import webpack from 'webpack';
 import path from 'path';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const vendor = ['react', 'react-dom', 'react-redux', 'react-router-dom'];
-const isProduction = process.env.NODE_ENV === 'production';
 
 export default {
   name: 'client',
+  mode: 'production',
   target: 'web',
-
-  devtool: isProduction ? false : 'cheap-module-eval-source-map',
 
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.scss'],
@@ -23,31 +20,16 @@ export default {
     vendor,
   },
 
-  // Remove support for node libraries in our build
-  // ref: https://github.com/webpack/node-libs-browser
-  node: {
-    __filename: false,
-    __dirname: false,
-    assert: false,
-    Buffer: false,
-    console: false,
-    crypto: false,
-    dns: false,
-    domain: false,
-    events: false,
-    fs: false,
-    net: false,
-    os: false,
-    path: false,
-    process: false,
-    punycode: false,
-    querystring: false,
-    setImmediate: false,
-    tty: false,
-    url: false,
-    util: false,
-    vm: false,
-    zlib: false,
+  stats: {
+    // Disable the verbose output on build
+    children: false,
+  },
+
+  output: {
+    filename: '[name].[hash].js',
+    path: path.join(__dirname, 'target', 'build'),
+    publicPath: '/',
+    chunkFilename: '[name].[hash].js',
   },
 
   module: {
@@ -63,10 +45,7 @@ export default {
       },
       {
         test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'postcss-loader', 'sass-loader'],
-        }),
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
@@ -79,57 +58,46 @@ export default {
     ],
   },
 
-  context: path.join(__dirname, 'src'),
-  output: {
-    filename: '[name].[hash].js',
-    path: path.join(__dirname, 'target', 'build'),
-    publicPath: '/',
-    chunkFilename: '[name].[hash].js',
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        // Don't generate automatic common chunks
+        default: false,
+        // Don't generate automatic vendor chunks
+        vendors: false,
+        // Custom common chunk
+        bundle: {
+          name: 'commons',
+          chunks: 'all',
+          minChunks: 3,
+          reuseExistingChunk: false,
+        },
+        // Custom vendor chunk by name
+        vendor: {
+          chunks: 'initial',
+          name: 'vendor',
+          test: 'vendor',
+        },
+        // Merge all the CSS into one file
+        styles: {
+          name: 'styles',
+          test: /\.s?css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
   },
+
+  context: path.join(__dirname, 'src'),
+
   profile: false,
   watch: false,
 
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false,
-    }),
-    new UglifyJsPlugin({
-      parallel: true,
-      sourceMap: !isProduction,
-      cache: true,
-      uglifyOptions: {
-        ie8: false,
-        ecma: 6,
-        mangle: true,
-        output: {
-          comments: false,
-          beautify: false,
-        },
-        compress: true,
-        warnings: false,
-      },
-    }),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      // Vendors has their own entry point and chunk.
-      name: 'vendor',
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      // Everything but the vendors.
-      name: 'bundle',
-      children: true,
-      async: 'commons',
-      minChunks: 3,
-    }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: '[name].[hash].css',
-      allChunks: true,
+      chunkFilename: '[name].[hash].css',
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new HtmlWebpackPlugin({
